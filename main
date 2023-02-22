@@ -1,0 +1,60 @@
+import pygame, sys, character, turtle
+
+ZERO = 0
+
+# Create Window
+SCREEN_HEIGHT = 500
+SCREEN_WIDTH = 1000
+SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT
+
+# Initialize Game
+pygame.init()
+surface = pygame.display.set_mode(SCREEN_SIZE)
+screenColor = (255, 255, 255)
+surface.fill(screenColor)
+
+# Create the "Ground"
+def drawGround():
+    point1 = (0, 400)
+    point2 = (1000, 400)
+    lineColor = (0, 0, 0)
+    pygame.draw.line(surface, lineColor, point1, point2)
+
+# Add Character
+charSpeed = 10
+charColor = (255, 0, 0)
+charSize = charWidth, charHeight = 50, 50
+charPos = posX, posY = 100, 350
+gameChar = pygame.Rect(posX, posY, charWidth, charHeight)
+pygame.draw.rect(surface, charColor, gameChar)
+
+#character movements
+def move_char(gameChar):
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        if(posX > ZERO):
+            gameChar.move_ip(-charSpeed, 0)
+    elif keys[pygame.K_RIGHT]:
+        if(posX  < SCREEN_WIDTH):
+            gameChar.move_ip(charSpeed, 0)
+    elif keys[pygame.K_UP]:
+        if(posY > ZERO):
+            gameChar.move_ip(0, -charSpeed)
+    elif keys[pygame.K_DOWN]:
+        if(posY < 400):
+            gameChar.move_ip(0, charSpeed)
+
+# Game Loop
+running = True;
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+    move_char(gameChar)
+    surface.fill(screenColor)
+    pygame.draw.rect(surface, charColor, gameChar)
+    drawGround()
+    pygame.display.update()
+
+# Loop Exited
+pygame.quit()
