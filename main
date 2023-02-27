@@ -14,13 +14,17 @@ surface = pygame.display.set_mode(SCREEN_SIZE)
 screenColor = (255, 255, 255)
 surface.fill(screenColor)
 screen_rect = surface.get_rect()
+sky = pygame.Rect(0, 0, 1000, 400)
+grass = pygame.Rect(0, 400, 1000, 100)
 
 # Create the "Ground"
 def drawGround():
     point1 = (0, 400)
     point2 = (1000, 400)
     lineColor = (0, 0, 0)
-    pygame.draw.line(surface, lineColor, point1, point2)
+    sky = pygame.draw.rect(surface, (173,216,230), pygame.Rect(0, 0, 1000, 400))
+    grass = pygame.draw.rect(surface, (124,252,0), pygame.Rect(0, 400, 1000, 100))
+    stopLine = pygame.draw.line(surface, lineColor, point1, point2)
 
 # Add Character
 charSpeed = 10
@@ -28,7 +32,7 @@ charColor = (255, 0, 0)
 charSize = charWidth, charHeight = 50, 50
 charPos = posX, posY = 100, 350
 gameChar = pygame.Rect(posX, posY, charWidth, charHeight)
-pygame.draw.rect(surface, charColor, gameChar)
+pygame.draw.rect(surface, charColor, gameChar, 2)
 
 #character movements
 def move_char(gameChar):
@@ -54,11 +58,11 @@ while running:
             running = False
     move_char(gameChar)
     surface.fill(screenColor)
-    pygame.draw.rect(surface, charColor, gameChar)
     drawGround()
+    pygame.draw.rect(surface, charColor, gameChar)
     pygame.display.update()
 
-    gameChar.clamp_ip(screen_rect) # ensure player is inside screen
+    gameChar.clamp_ip(sky) # ensure player is inside screen
 
 # Loop Exited
 pygame.quit()
