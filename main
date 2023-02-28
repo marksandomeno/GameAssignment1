@@ -67,8 +67,14 @@ def move_char(gameChar):
 
 obstacle_timer = pygame.time.get_ticks()
 
+# counter for live score
+counter = 0
+
 running = True;
 while running:
+    pygame.display.set_caption("Live Score: " + str(counter))
+    counter += 1
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
