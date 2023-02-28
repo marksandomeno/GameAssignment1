@@ -1,4 +1,4 @@
-import pygame, sys, character, turtle
+import pygame, sys, character, turtle, random
 
 ZERO = 0
 
@@ -34,6 +34,19 @@ charPos = posX, posY = 100, 350
 gameChar = pygame.Rect(posX, posY, charWidth, charHeight)
 pygame.draw.rect(surface, charColor, gameChar, 2)
 
+# Add Obstacles
+obstacle_width = 50
+obstacle_height = 50
+obstacle_color = (0, 0, 255)
+obstacle_speed = 5
+obstacles = []
+
+def create_obstacle():
+    obstacle_pos = (SCREEN_WIDTH, random.randint(0, 350))
+    obstacle_rect = pygame.Rect(obstacle_pos[0], obstacle_pos[1], obstacle_width, obstacle_height)
+    obstacles.append(obstacle_rect)
+
+
 #character movements
 def move_char(gameChar):
     keys = pygame.key.get_pressed()
@@ -51,6 +64,9 @@ def move_char(gameChar):
             gameChar.move_ip(0, charSpeed)
 
 # Game Loop
+
+obstacle_timer = pygame.time.get_ticks()
+
 running = True;
 while running:
     for event in pygame.event.get():
@@ -59,6 +75,22 @@ while running:
     move_char(gameChar)
     surface.fill(screenColor)
     drawGround()
+
+     # Check timer to spawn obstacles
+    current_time = pygame.time.get_ticks()
+    if current_time - obstacle_timer > 5000:
+        create_obstacle()
+        obstacle_timer = current_time
+
+    # Draw and update obstacles
+    for obstacle_rect in obstacles:
+        pygame.draw.rect(surface, obstacle_color, obstacle_rect)
+        obstacle_rect.move_ip(-obstacle_speed, 0)
+
+    # Check for collision with character
+        if gameChar.colliderect(obstacle_rect):
+            print("Collision detected!")
+
     pygame.draw.rect(surface, charColor, gameChar)
     pygame.display.update()
 
