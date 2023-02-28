@@ -7,6 +7,9 @@ SCREEN_HEIGHT = 500
 SCREEN_WIDTH = 1000
 SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT
 
+# counter for live score
+counter = 0
+
 
 # Initialize Game
 pygame.init()
@@ -67,9 +70,6 @@ def move_char(gameChar):
 
 obstacle_timer = pygame.time.get_ticks()
 
-# counter for live score
-counter = 0
-
 running = True;
 while running:
     pygame.display.set_caption("Live Score: " + str(counter))
@@ -84,14 +84,16 @@ while running:
 
      # Check timer to spawn obstacles
     current_time = pygame.time.get_ticks()
-    if current_time - obstacle_timer > 5000:
+    if current_time - obstacle_timer > 2500:
+        # print(obstacle_speed+counter*.0025)
         create_obstacle()
         obstacle_timer = current_time
 
     # Draw and update obstacles
     for obstacle_rect in obstacles:
         pygame.draw.rect(surface, obstacle_color, obstacle_rect)
-        obstacle_rect.move_ip(-obstacle_speed, 0)
+        obstacle_rect.move_ip(-obstacle_speed-(counter*.0025), 0)
+
 
     # Check for collision with character
         if gameChar.colliderect(obstacle_rect):
