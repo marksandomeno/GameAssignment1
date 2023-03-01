@@ -21,7 +21,7 @@ def start_screen():
 
     # Wait for the user to click the start button
     while True:
-        # Handle events
+    # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -29,6 +29,10 @@ def start_screen():
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if start_button.collidepoint(event.pos):
                     return  # Start the game loop
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
 
         # Draw the start screen
         surface.fill((0, 0, 0))
@@ -49,6 +53,7 @@ surface.fill(screenColor)
 screen_rect = surface.get_rect()
 sky = pygame.Rect(0, 0, 1000, 400)
 grass = pygame.Rect(0, 400, 1000, 100)
+
 
 #Show start screen
 start_screen()
@@ -107,11 +112,13 @@ def game_over():
     surface.blit(text, text_rect)
     pygame.display.update()
 
+
 # Game Loop
 obstacle_timer = pygame.time.get_ticks()
 
 running = True;
 while running:
+
     pygame.display.set_caption("Air Time: " + str(counter))
     counter += 1
 
@@ -140,6 +147,19 @@ while running:
             print("Collision detected!")
             game_over();
             counter = 0;
+
+#cntl escape to quit
+    for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+        pygame.quit()
+        sys.exit()
+    elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        if start_button.collidepoint(event.pos):
+            return  # Start the game loop
+    elif event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_ESCAPE:
+            pygame.quit()
+            sys.exit()
 
 
     pygame.draw.rect(surface, charColor, gameChar)
