@@ -11,6 +11,36 @@ SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT
 counter = 0
 
 
+def start_screen():
+    # Set up the start screen
+    font = pygame.font.SysFont(None, 50)
+    title = font.render("Flight Simulator", True, (255, 255, 255))
+    start_button = pygame.Rect(400, 300, 200, 50)
+    button_color = (0, 0, 255)
+    text_color = (255, 255, 255)
+
+    # Wait for the user to click the start button
+    while True:
+        # Handle events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if start_button.collidepoint(event.pos):
+                    return  # Start the game loop
+
+        # Draw the start screen
+        surface.fill((0, 0, 0))
+        surface.blit(title, (SCREEN_WIDTH // 2 - title.get_width() // 2, 100))
+        pygame.draw.rect(surface, button_color, start_button)
+        font = pygame.font.SysFont(None, 30)
+        start_text = font.render("Start", True, text_color)
+        surface.blit(start_text, (start_button.x + start_button.width // 2 - start_text.get_width() // 2,
+                                  start_button.y + start_button.height // 2 - start_text.get_height() // 2))
+        pygame.display.update()
+
+
 # Initialize Game
 pygame.init()
 surface = pygame.display.set_mode(SCREEN_SIZE)
@@ -19,6 +49,9 @@ surface.fill(screenColor)
 screen_rect = surface.get_rect()
 sky = pygame.Rect(0, 0, 1000, 400)
 grass = pygame.Rect(0, 400, 1000, 100)
+
+#Show start screen
+start_screen()
 
 # Create the "Ground"
 def drawGround():
@@ -69,18 +102,17 @@ def move_char(gameChar):
 # Function to end the game when collision detected
 def game_over():
     font = pygame.font.Font(None, 36)
-    text = font.render("GAME OVER", True, (255,0,0))
+    text = font.render("CRASH! GAME OVER!", True, (255,0,0))
     text_rect = text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
     surface.blit(text, text_rect)
     pygame.display.update()
 
 # Game Loop
-
 obstacle_timer = pygame.time.get_ticks()
 
 running = True;
 while running:
-    pygame.display.set_caption("Live Score: " + str(counter))
+    pygame.display.set_caption("Air Time: " + str(counter))
     counter += 1
 
     for event in pygame.event.get():
