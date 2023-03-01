@@ -66,6 +66,14 @@ def move_char(gameChar):
         if(posY < 400):
             gameChar.move_ip(0, charSpeed)
 
+# Function to end the game when collision detected
+def game_over():
+    font = pygame.font.Font(None, 36)
+    text = font.render("GAME OVER", True, (255,0,0))
+    text_rect = text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+    surface.blit(text, text_rect)
+    pygame.display.update()
+
 # Game Loop
 
 obstacle_timer = pygame.time.get_ticks()
@@ -98,6 +106,9 @@ while running:
     # Check for collision with character
         if gameChar.colliderect(obstacle_rect):
             print("Collision detected!")
+            game_over();
+            counter = 0;
+
 
     pygame.draw.rect(surface, charColor, gameChar)
     pygame.display.update()
