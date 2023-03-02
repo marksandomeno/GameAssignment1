@@ -2,6 +2,7 @@ import pygame, sys, character, turtle, random
 
 ZERO = 0
 
+
 # Create Plane Class
 class Plane:
     def initPlane(self, image_path, x, y, speed):
@@ -12,9 +13,10 @@ class Plane:
         self.rect.x = x
         self.rect.y = y
         self.speed = speed
+
     def draw(self, surface):
-       pygame.Surface.blit(surface, self.image, self.rect)
-       pygame.display.update()
+        pygame.Surface.blit(surface, self.image, self.rect)
+        pygame.display.update()
 
 
 # Create Window
@@ -66,17 +68,19 @@ sky = pygame.Rect(0, 0, 1000, 400)
 grass = pygame.Rect(0, 400, 1000, 100)
 Plane.initPlane(Plane, "plane.png", 100, 100, 10)
 
-#Show start screen
+# Show start screen
 start_screen()
+
 
 # Create the "Ground"
 def drawGround():
     point1 = (0, 400)
     point2 = (1000, 400)
     lineColor = (0, 0, 0)
-    sky = pygame.draw.rect(surface, (173,216,230), pygame.Rect(0, 0, 1000, 400))
-    grass = pygame.draw.rect(surface, (76,187,23), pygame.Rect(0, 400, 1000, 100))
+    sky = pygame.draw.rect(surface, (173, 216, 230), pygame.Rect(0, 0, 1000, 400))
+    grass = pygame.draw.rect(surface, (76, 187, 23), pygame.Rect(0, 400, 1000, 100))
     stopLine = pygame.draw.line(surface, lineColor, point1, point2)
+
 
 # Add Obstacles
 obstacle_width = 50
@@ -85,32 +89,36 @@ obstacle_color = (0, 0, 255)
 obstacle_speed = 5
 obstacles = []
 
+
 def create_obstacle():
     obstacle_pos = (SCREEN_WIDTH, random.randint(0, 350))
     obstacle_rect = pygame.Rect(obstacle_pos[0], obstacle_pos[1], obstacle_width, obstacle_height)
     obstacles.append(obstacle_rect)
 
-#plane movements
-def movePlane(speed):
-   keys = pygame.key.get_pressed()
 
-    #move left, right, up, down
-   if keys[pygame.K_LEFT]:
+# plane movements
+def movePlane(speed):
+    keys = pygame.key.get_pressed()
+
+    # move left, right, up, down
+    if keys[pygame.K_LEFT]:
         Plane.rect.move_ip(-speed, 0)
-   elif keys[pygame.K_RIGHT]:
+    elif keys[pygame.K_RIGHT]:
         Plane.rect.move_ip(speed, 0)
-   elif keys[pygame.K_UP]:
+    elif keys[pygame.K_UP]:
         Plane.rect.move_ip(0, -speed)
-   elif keys[pygame.K_DOWN]:
+    elif keys[pygame.K_DOWN]:
         Plane.rect.move_ip(0, speed)
+
 
 # Function to end the game when collision detected
 def game_over():
     font = pygame.font.Font(None, 36)
-    text = font.render("CRASH! GAME OVER!", True, (255,0,0))
-    text_rect = text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+    text = font.render("CRASH! GAME OVER!", True, (255, 0, 0))
+    text_rect = text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
     surface.blit(text, text_rect)
     pygame.display.update()
+
 
 # Game Loop
 obstacle_timer = pygame.time.get_ticks()
@@ -127,7 +135,7 @@ while running:
     surface.fill(screenColor)
     drawGround()
 
-     # Check timer to spawn obstacles
+    # Check timer to spawn obstacles
     current_time = pygame.time.get_ticks()
     if current_time - obstacle_timer > 2500:
         # print(obstacle_speed+counter*.005)
@@ -137,10 +145,9 @@ while running:
     # Draw and update obstacles
     for obstacle_rect in obstacles:
         pygame.draw.rect(surface, obstacle_color, obstacle_rect)
-        obstacle_rect.move_ip(-obstacle_speed-(counter*.075), 0)
+        obstacle_rect.move_ip(-obstacle_speed - (counter * .075), 0)
 
-
-    #Check for collision with character
+        # Check for collision with character
         if Plane.rect.colliderect(obstacle_rect):
             print("Collision detected!")
             game_over();
@@ -149,7 +156,7 @@ while running:
     Plane.draw(Plane, surface)
     pygame.display.update()
 
-    Plane.rect.clamp_ip(sky) # ensure player is inside screen
+    Plane.rect.clamp_ip(sky)  # ensure player is inside screen
 
 # Loop Exited
 pygame.quit()
