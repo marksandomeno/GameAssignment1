@@ -1,7 +1,7 @@
-                                                                    Liam Gallagher, Mark Sandomeno, CPSC 4160
+                                                    Liam Gallagher, Mark Sandomeno, CPSC 4160
 
 
-                                                                                  FLIGHT SIMULATOR
+                                                              FLIGHT SIMULATOR
 
 
 Version: Python Interpreter 3.11
@@ -13,7 +13,7 @@ OS: MacOS
 
 
 
-                                                                               The Game Document 
+                                                               The Game Document 
 
 Motivation 
 
