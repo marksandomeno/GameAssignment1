@@ -5,7 +5,9 @@
 
 
 Version: Python Interpreter 3.11
+
 IDE: PyCharm
+
 OS: MacOS
 
 
