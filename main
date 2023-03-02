@@ -138,7 +138,7 @@ while running:
     # Draw and update obstacles
     for obstacle_rect in obstacles:
         pygame.draw.rect(surface, obstacle_color, obstacle_rect)
-        obstacle_rect.move_ip(-obstacle_speed-(counter*.0075), 0)
+        obstacle_rect.move_ip(-obstacle_speed-(counter*.075), 0)
 
 
     # Check for collision with character
